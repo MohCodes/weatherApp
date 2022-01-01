@@ -3,7 +3,11 @@ const cityNameDisplay = document.getElementById("cityName")
 const temperatureDisplay = document.getElementById("temperature")
 const conditionsDisplay = document.getElementById("conditions")
 const windspeedDisplay = document.getElementById('windspeed')
+const homeButton = document.getElementById("homeButton")
+const gifDisplay = document.getElementById("giff")
+homeButton.style.display='none'
 weatherDisplayContainer.style.display= "none"
+
 function newData (name,temperature,conditions,windSpeed){
     this.name=name;
     this.temperature=temperature;
@@ -27,13 +31,15 @@ var newObjData ={}
     //EVENT CLICK SUBMIT TO ENTER CITY
     const cityInput = document.getElementById('searchTextField');
     const submitButton = document.getElementById('submit');
-    submitButton.addEventListener('click',function (){
+    submitButton.addEventListener('click',async function (){
         determineCityName()
 
-        getWeatherData(cityName);
-
+        await getWeatherData(cityName);
+        await getGif(newObjData["conditions"])
         informationDisplay()
+       
         fillDisplay()
+
        })
 
     function determineCityName (){
@@ -49,6 +55,14 @@ var newObjData ={}
         return cityName
         }
         
+    }
+
+    async function getGif (conditions1){
+        const request = await fetch(`https://api.giphy.com/v1/gifs/translate?api_key=KplUVOXBB5gCMih07Vd65EoWD6XDLIIc&s=weather-${conditions1}`,{mode:'cors'})
+        const requestJSON = await request.json();
+        window.img = await requestJSON.data.images.downsized.url;
+        console.log(requestJSON)
+    
     }
 
     //GOOGLE AUTOCOMPLETE
@@ -70,6 +84,7 @@ var newObjData ={}
         const formContainer = document.getElementById("form")
         formContainer.style.display= 'none'
         weatherDisplayContainer.style.display= ""
+        homeButton.style.display=''
        }
 
        function fillDisplay (){
@@ -77,6 +92,17 @@ var newObjData ={}
        temperatureDisplay.textContent = `Temperature: ${newObjData["temperature"]}`
        conditionsDisplay.textContent = `Conditions: ${newObjData["conditions"]}`
        windspeedDisplay.textContent = `Wind Speed: ${newObjData["windSpeed"]}`
-       console.log(newObjData["name"])
+       let img2 = document.createElement("img")
+       gifDisplay.innerHTML = ""
+       img2.src = img
+       gifDisplay.appendChild(img2)
        }
+
+homeButton.addEventListener("click", function(){
+    const formContainer = document.getElementById("form")
+    homeButton.style.display='none'
+    weatherDisplayContainer.style.display= "none"
+    formContainer.style.display= ''
+
+})
 

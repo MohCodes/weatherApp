@@ -9,8 +9,9 @@
 .formContainer {
   display: flex;
   border: red double;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+  flex-direction: column;
   height: 96vh;
   width: 100%;
 }
@@ -56,4 +57,32 @@ button {
 
 .content {
   border: red 2px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: auto;
+}
+
+.cityName {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.topBar {
+  border: red 2px solid;
+  display: flex;
+  width: 100%;
+  height: 10%;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.homeButton {
+  border: red 2px solid;
+  display: flex;
+  height: 50%;
+  width: 5%;
+  align-items: center;
+  justify-content: center;
 }
